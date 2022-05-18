@@ -1,6 +1,7 @@
-from utility import Node, get_huffman_code
+from utility import Node
 ind = 0
-
+import sys
+sys.setrecursionlimit(40000)
 
 def deseralize(v):
   global ind
@@ -14,33 +15,29 @@ def deseralize(v):
   nw.right = deseralize(v)
   return nw
 
-def decode(code, root, mr):
-  global ind
-  if ind >= len(code):
-    return chr(root.val)
+def decode_ite(code, root):
+  if not code:
+    return ''
+  curr = root
+  for i, c in enumerate(code):
+    if c == '0':
+      curr = curr.left
+    else:
+      curr = curr.right
+    if not curr.left and not curr.right:
+      return chr(curr.val) + decode_ite(code[i+1:], root)
+  return chr(curr.val)
 
-  if not root.left and not root.right:
-    return chr(root.val) + decode(code, mr, mr)
-  
-  if code[ind] == '0':
-    ind += 1
-    return decode(code, root.left, mr)
-  else:
-    ind += 1
-    return decode(code, root.right, mr)
 
-def main(code, lookup):
+def huffman_decode(code, lookup):
   global ind
   ind = 0
   root = deseralize(lookup.split(','))
   ind = 0
-  d = decode(code, root, root)
+  d = decode_ite(code, root)
   return d
 
 if __name__ == '__main__':
   code = '111101001100'
   lookup = '394,297,100,|,|,197,98,|,|,99,|,|,97,|,|'
-  print(main(code, lookup))
-
-
-# 111101001100
+  print(huffman_decode(code, lookup))
