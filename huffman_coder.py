@@ -1,6 +1,6 @@
 import heapq
 from collections import Counter
-from utility import Node, get_huffman_code
+from utility import Node
 
 
 def get_freqency(s):
@@ -52,7 +52,7 @@ def dummy_tree():
   root.right.right = Node(6)
   return root
 
-def main(st):
+def huffman_encode(st):
   root = get_huffman_tree(st)
   mp = get_huffman_code(root)
   # root = dummy_tree()
@@ -62,4 +62,4 @@ def main(st):
 
 if __name__ == '__main__':
   st = 'aaaabcd'
-  print(main(st))
+  print(huffman_encode(st))
