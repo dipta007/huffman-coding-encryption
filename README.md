@@ -26,3 +26,8 @@ To compare the encoding and decoding results, you need to provide two files - on
 ```
 $ python compare.py filename1 filename2
 ```
+
+### References
+- [x] [Huffman Coding](https://en.wikipedia.org/wiki/Huffman_coding)
+- [x] https://www.geeksforgeeks.org/huffman-decoding/
+- [x] https://www.geeksforgeeks.org/huffman-coding-greedy-algo-3/
