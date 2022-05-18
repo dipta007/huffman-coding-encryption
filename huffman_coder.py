@@ -1,14 +1,7 @@
 import heapq
 from collections import Counter
+from utility import Node, get_huffman_code
 
-class Node:
-  def __init__(self, val=0, left=None, right=None) -> None:
-    self.val = val
-    self.left = left
-    self.right = right
-  
-  def __lt__(self, other):
-    return self.val <= other.val
 
 def get_freqency(s):
   freq = Counter(s)
@@ -18,7 +11,7 @@ def get_huffman_tree(st):
   freq = get_freqency(st)
   heap = []
   for key in freq:
-    nw = Node(key)
+    nw = Node(ord(key))
     heapq.heappush(heap, (freq[key], nw))
   while len(heap) > 1:
     left = heapq.heappop(heap)
@@ -38,29 +31,35 @@ def get_huffman_code(root, code=''):
     d.update(get_huffman_code(root.right, code + '1'))
   return d
 
-def get_lookup_table(mp):
-  mx = max([len(v) for v in mp.values()])
-  lens = ''
-  tab = ''
-  for k in mp.keys():
-    lens += str(len(mp[k])) + '|'
-    mp[k] = mp[k] + '0' * (mx - len(mp[k]))
-    tab += str(ord(k)) + ':' + mp[k] + ':' + str(len(mp[k])) + '|'
-  return tab
+def serialize(root):
+  if root is None:
+    return '|'
+  return str(root.val) + ',' + serialize(root.left) + ',' + serialize(root.right)
 
 def compress(st, mp):
   ret = ''
   for v in st:
-    ret += mp[v]
+    ret += mp[ord(v)]
   return ret
+
+def dummy_tree():
+  root = Node(0)
+  root.left = Node(1)
+  root.right = Node(2)
+  root.left.left = Node(3)
+  root.left.right = Node(4)
+  root.right.left = Node(5)
+  root.right.right = Node(6)
+  return root
 
 def main(st):
   root = get_huffman_tree(st)
   mp = get_huffman_code(root)
+  # root = dummy_tree()
   enc = compress(st, mp)
-  loopup = get_lookup_table(mp)
+  loopup = serialize(root)
   return enc, loopup
 
 if __name__ == '__main__':
-  st = 'Aaalgo'
+  st = 'aaaabcd'
   print(main(st))
