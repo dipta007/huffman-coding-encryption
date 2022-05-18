@@ -1,5 +1,9 @@
 # huffman-coding-encryption
 
+### Papers
+- [x] [Text Encryption with Huffman Compression](https://research.ijcaonline.org/volume54/number6/pxc3882307.pdf)
+- [x] [EFFICIENT HUFFMAN DECODING WITH TABLE LOOKUP ](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.9447&rep=rep1&type=pdf)
+
 ## Encoding
 
 To run encoding, you need to provide a text file.
