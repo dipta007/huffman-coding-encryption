@@ -17,19 +17,28 @@ def deseralize(v):
   return nw
 
 def decode_ite(code, root):
-  if not code:
-    return ''
-  curr = root
-  # 4.2.1 traverse the tree to find the leaf node
-  for i, c in enumerate(code):
-    if c == '0':
-      curr = curr.left
-    else:
-      curr = curr.right
-    # if found the leaf start from the root again
-    if not curr.left and not curr.right:
-      return chr(curr.val) + decode_ite(code[i+1:], root)
-  return chr(curr.val)
+  st = [(code, root)]
+
+  res = ''
+  while len(st) > 0:
+    code, nw = st.pop()
+    if len(code) == 0:
+      res += ''
+      break
+    
+    curr = nw
+    # 4.2.1 traverse the tree to find the leaf node
+    for i, c in enumerate(code):
+      if c == '0':
+        curr = curr.left
+      else:
+        curr = curr.right
+      # if found the leaf start from the root again
+      if not curr.left and not curr.right:
+        res += chr(curr.val)
+        st.append((code[i+1:], root))
+        break
+  return res
 
 
 def huffman_decode(code, lookup):
