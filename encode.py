@@ -6,26 +6,33 @@ import os
 
 
 if __name__ == '__main__':
+  # Check if the user has provided the correct number of arguments
   n = len(sys.argv)
   if n == 1:
     print('Usage: python3 encode.py [filename]')
     exit()
 
+  # Get the filename from the command line
   filename = sys.argv[1]
+  # Check if the file exists
   if not os.path.isfile(filename):
     print('File not found')
     exit()
   
+  # Read the file
   with open(filename, 'r') as f:
     st = ''
     for line in f:
       st += line
 
     # print(st)
+    # compress the file using huffman coding
     code, tree = huffman_encode(st)
+    # encrypt the file using a key
     enc = encrypt(code)
     # print(enc)
 
+    # Output logs
     print("*" * 40)
     print('Your document is compressed & encrypted successfully!')
     enc_filename = 'encoded.txt'

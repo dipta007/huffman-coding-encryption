@@ -7,23 +7,31 @@ import os
 
 if __name__ == '__main__':
   n = len(sys.argv)
+  # Check if the user has provided the correct number of arguments
   if n == 1:
     print('Usage: python3 decode.py [filename]')
     exit()
 
+  # Get the filename from the command line
   filename = sys.argv[1]
+  # Check if the file exists
   if not os.path.isfile(filename):
     print('File not found')
     exit()
   
+  # Read the file
   with open(filename, 'r') as f:
     rows = f.readlines()
+    # Is that a valid file?
     if len(rows) != 5:
       print('Invalid file format')
       exit()
     
+    # Strip new lines from all the lines
     rows = [row.strip() for row in rows]
+    # Decrypt the file
     d = decrypt(rows[1], rows[2], rows[3], rows[4])
+    # Decode the file
     txt = huffman_decode(d, rows[0])
     # txt = ''
     # print("*" * 40)

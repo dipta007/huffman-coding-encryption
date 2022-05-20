@@ -4,15 +4,20 @@ from utility import Node
 
 
 def get_freqency(s):
+  # 1.1.1.1 get frequency
   freq = Counter(s)
   return freq
 
 def get_huffman_tree(st):
+  # 1.1.1 get frequency
   freq = get_freqency(st)
+  # 1.1.2 build heap from frequency
   heap = []
   for key in freq:
     nw = Node(ord(key))
     heapq.heappush(heap, (freq[key], nw))
+
+  # 1.1.3 build huffman tree
   while len(heap) > 1:
     left = heapq.heappop(heap)
     right = heapq.heappop(heap)
@@ -22,6 +27,7 @@ def get_huffman_tree(st):
   return heapq.heappop(heap)[1]
 
 def get_huffman_code(root, code=''):
+  # 1.2.1 get huffman code by tree traverse
   if root.left is None and root.right is None:
     return {root.val: code}
   d = {}
@@ -32,11 +38,13 @@ def get_huffman_code(root, code=''):
   return d
 
 def serialize(root):
+  # 1.4.1 serialize the tree by pre-order traversal
   if root is None:
     return '|'
   return str(root.val) + ',' + serialize(root.left) + ',' + serialize(root.right)
 
 def compress(st, mp):
+  # 1.3.1 compress the string using huffman code in dictionary
   ret = ''
   for v in st:
     ret += mp[ord(v)]
@@ -53,10 +61,14 @@ def dummy_tree():
   return root
 
 def huffman_encode(st):
+  # 1.1 get huffman tree
   root = get_huffman_tree(st)
+  # 1.2 get huffman code
   mp = get_huffman_code(root)
   # root = dummy_tree()
+  # 1.3 compress the string
   enc = compress(st, mp)
+  # 1.4 serialize the tree for storage
   loopup = serialize(root)
   return enc, loopup
 

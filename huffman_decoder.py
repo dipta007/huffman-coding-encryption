@@ -9,6 +9,7 @@ def deseralize(v):
     ind += 1
     return None
 
+  # 4.1.1 deseralize the tree from the string to tree
   nw = Node(int(v[ind]))
   ind += 1
   nw.left = deseralize(v)
@@ -19,11 +20,13 @@ def decode_ite(code, root):
   if not code:
     return ''
   curr = root
+  # 4.2.1 traverse the tree to find the leaf node
   for i, c in enumerate(code):
     if c == '0':
       curr = curr.left
     else:
       curr = curr.right
+    # if found the leaf start from the root again
     if not curr.left and not curr.right:
       return chr(curr.val) + decode_ite(code[i+1:], root)
   return chr(curr.val)
@@ -32,8 +35,10 @@ def decode_ite(code, root):
 def huffman_decode(code, lookup):
   global ind
   ind = 0
+  # 4.1 deseralize the tree from the string to tree
   root = deseralize(lookup.split(','))
   ind = 0
+  # 4.2 decode the code using the tree
   d = decode_ite(code, root)
   return d
 
