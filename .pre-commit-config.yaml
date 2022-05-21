@@ -1,12 +1,11 @@
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.2.0
     hooks:
-    -   id: double-quote-string-fixer
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
 -   repo: https://github.com/psf/black
-    rev: 21.12b0
+    rev: 22.3.0
     hooks:
     -   id: black
     -   id: black-jupyter
@@ -15,3 +14,4 @@ repos:
     hooks:
     -   id: isort
         name: isort (python)
+        args: ["--profile", "black", "--filter-files"]
